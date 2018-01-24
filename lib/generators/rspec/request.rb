@@ -29,15 +29,22 @@ module Generators::Rspec
         )
         request_params = _request_params
 
-        summary = action_doc['summary'].sub('GET ', 'get ').sub('PATCH ', '')
-                      .sub('POST', 'post').sub('DELETE', 'delete') if action_doc['summary']
-        desc = desc_temp(desc) || "#{http_verb.upcase} #{path} to ##{action}" \
-                       ", #{add_desc || summary || action_doc['description']}"
+        summary = action_doc['summary'].sub('GET', 'get').sub(/PATCH\|PUT |PATCH |PUT /, '').sub('POST', 'post').sub('DELETE', 'delete') if action_doc['summary']
+        desc = "#{path}', '#{desc_temp(desc) || add_desc || summary || action_doc['description']}"
         sub_content = _instance_eval(block) if block_given?
+        params = %({ #{request_params.gsub(/Token: '[^']*', /, '')} })
+
+        if action == :create
+          content_stack.last << <<~CREATE
+            let(:create_#{let_param_name}) { #{params} }
+
+          CREATE
+          params = "create_#{let_param_name}"
+        end
 
         content_stack.last << <<~DESCRIBE
-          describe '#{desc}' do
-            let(:#{let_param_name}) { { #{request_params} } }
+          desc :#{action}, :#{http_verb}, '#{desc}'#{', :token_needed' if request_params['Token']} do
+            let(:#{let_param_name}) { #{params} }
             #{add_ind_to each[:describe]}
 
             #{add_ind_to sub_content}
@@ -68,8 +75,8 @@ module Generators::Rspec
         content_stack.last << <<~IT
           it '#{_does_what(desc_temp(does_what), what || not_what)}' do
             #{_request_by(binding.local_variable_get(:when), params)}
-            #{add_ind_to expects}
-            #{add_ind_to sub_content}
+        #{add_ind_to expects}
+        #{add_ind_to sub_content}
           end
         IT
         content_stack.last << "\n"

@@ -9,16 +9,15 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'generators'
+group :development, :test do
+  gem 'generators', github: 'ikkiuchi/generators'
+end
 ```
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install generators
 
 ## Usage
 

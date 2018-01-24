@@ -165,7 +165,7 @@ module Generators::ModelDocSupport
         allow_nil = !info.key?(:null) && !info.key?(:absence)
 
         if type == :belongs_to
-          fbot_rb_stack.last << "#{name}\n"
+          fbot_rb_stack.last << "#{name.to_s.ljust(name_max_length)} { #{name.camelize}.last || association(:#{name}) }\n"
         else
           value = info[:default]
           value = pr(info[:inclusion]&.first) if value.nil?

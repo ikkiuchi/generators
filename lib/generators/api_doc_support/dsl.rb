@@ -28,13 +28,13 @@ module Generators::ApiDocSupport
       # TODO
     end
 
-    def g
-      ctrl_path = "app/controllers/#{@route_base}_controller.rb"
-      spdoc_path = "app/_docs/rspec_docs/#{@route_base.sub('api/', '')}_spdoc.rb"
+    def g version = nil
+      ctrl_path = "app/controllers/#{@route_base}_controller#{version}.rb"
+      spdoc_path = "app/_docs/rspec_docs/#{@route_base.sub('api/', '')}_spdoc#{version}.rb"
 
-      write :Controller, controller_rb.sub("\n\nend", "\nend"), to: ctrl_path
-      write :SpecDoc, spdoc_rb, to: spdoc_path
-      print_routes
+      write :Controller, controller_rb.sub("\n\nend", "\nend"), to: ctrl_path unless File::exist?(ctrl_path)
+      write :SpecDoc, spdoc_rb, to: spdoc_path unless File::exist?(spdoc_path)
+      print_routes if @api_actions.present?
     end
 
     def controller_rb

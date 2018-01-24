@@ -89,7 +89,7 @@ module Generators::ModelDocSupport
     end
 
     def soft_destroy
-      model_rb_stack.last << "acts_as_paranoid\n\n"
+      model_rb_stack.last << "soft_destroy\n\n"
       datetime :deleted_at
     end
 

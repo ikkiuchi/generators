@@ -19,7 +19,7 @@ module Generators::Rspec
 
     def run
       rescue_no_method_run { super() }
-      Dir['./app/**/*_spdoc.rb'].each { |file| require file }
+      Dir['./app/**/*_spdoc*.rb'].each { |file| require file }
       descendants.each do |spdoc|
         *dir_path, file_name = spdoc.path.split('/')
         dir_path = "spec/#{dir_path.join('/')}"

@@ -10,7 +10,8 @@ files = %w[
   rspec/normal/helpers rspec/normal
   rspec/request/helpers rspec/request
 ].map { |path| path.prepend('generators/') }
-files.each { |file| require file }
+
+files.each { |file| require file } if Rails.env.development? || Rails.env.test?
 
 module Generators
   # Your code goes here...
