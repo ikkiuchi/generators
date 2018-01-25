@@ -11,7 +11,7 @@ files = %w[
   rspec/request/helpers rspec/request
 ].map { |path| path.prepend('generators/') }
 
-files.each { |file| require file } if Rails.env.development? || Rails.env.test?
+files.each { |file| require file }
 
 module Generators
   # Your code goes here...
