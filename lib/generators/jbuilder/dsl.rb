@@ -11,6 +11,7 @@ module Generators::Jbuilder
     def api action, summary = '', http: nil, builder: nil, skip: [ ], use: [ ], &block
       api = super(action, summary, http: http, skip: skip, use: use, &block)
       return unless Rails.env.development?
+      return if api.nil?
       generate(api.action_path, builder)
     end
 

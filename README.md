@@ -21,7 +21,17 @@ And then execute:
 
 ## Usage
 
-TODO: Write usage instructions here
+See: [Zero Rails](https://github.com/zhandao/zero-rails/tree/master/app/_docs)
+
+    $ vi app/_docs/model_docs/[your_model_name]_mdoc.rb
+
+MDoc (model doc) will generate: Model, Migration, Factory, Model Spec, ApiDoc(if g(version)).
+
+ApiDoc will generate (if g()): Controller, Jbuilder Views, Request SpecDoc.
+
+SpDoc (spec doc) will generate: Request / Normal / Model Spec.
+
+**Remember to check the generated files.**
 
 ## Development
 

@@ -20,6 +20,7 @@ module Generators::ApiDocSupport
 
     %i[ get post patch put delete ].each do |verb|
       define_method verb do |path|
+        @print_routes = true
         @path = { path: path, verb: verb }
       end
     end
@@ -34,7 +35,7 @@ module Generators::ApiDocSupport
 
       write :Controller, controller_rb.sub("\n\nend", "\nend"), to: ctrl_path unless File::exist?(ctrl_path)
       write :SpecDoc, spdoc_rb, to: spdoc_path unless File::exist?(spdoc_path)
-      print_routes if @api_actions.present?
+      print_routes if @print_routes
     end
 
     def controller_rb
