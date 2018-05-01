@@ -27,7 +27,7 @@ See: [Zero Rails](https://github.com/zhandao/zero-rails/tree/master/app/_docs)
 
 MDoc (model doc) will generate: Model, Migration, Factory, Model Spec, ApiDoc(if g(version)).
 
-ApiDoc will generate (if g()): Controller, Jbuilder Views, Request SpecDoc.
+ApiDoc will generate (if g()): Controller, Jbuilder Views, Request SpecDoc, BizError.
 
 SpDoc (spec doc) will generate: Request / Normal / Model Spec.
 

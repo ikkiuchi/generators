@@ -17,7 +17,7 @@ module Generators::Rspec
         sub_content = _instance_eval(block) if block_given?
 
         content_stack.last << <<~DESCRIBE
-          describe '#{desc}' do
+          func '#{desc}' do
             #{add_ind_to each[:describe]}
             #{add_ind_to sub_content}
           end

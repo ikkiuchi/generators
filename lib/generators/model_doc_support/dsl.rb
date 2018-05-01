@@ -49,10 +49,11 @@ module Generators::ModelDocSupport
       # TODO
     end
 
-    def belongs_to? name, req = :opt, polymorphic: nil
+    def belongs_to? name, req = :opt, polymorphic: nil, class_name: nil
       name = name.to_s.singularize
       options = req == :opt ? { optional: true } : { }
       options[:polymorphic] = true if polymorphic
+      options[:class_name] = class_name if class_name
       field name, :belongs_to, req, options.merge(foreign_key: true)
       model_rb_stack.last << <<~BT
         belongs_to :#{name}#{', ' << pr(options) if options.present?}
@@ -60,8 +61,8 @@ module Generators::ModelDocSupport
       model_rb_stack.last << "\n"
     end
 
-    def belongs_to name, polymorphic: nil
-      belongs_to? name, :req, polymorphic: polymorphic
+    def belongs_to name, polymorphic: nil, class_name: nil
+      belongs_to? name, :req, polymorphic: polymorphic, class_name: class_name
     end
 
     %i[ has_one has_many has_many_through has_one_through has_and_belongs_to_many ].each do |relation|
