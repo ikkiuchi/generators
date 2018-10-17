@@ -5,7 +5,8 @@ module Generators::Rspec
         require 'params_processor/doc_converter'
 
         cattr_reader :apis do
-          ::ParamsProcessor::DocConverter.docs ||= ::ParamsProcessor::DocConverter.new OpenApi.docs
+          # ::ParamsProcessor::DocConverter.docs ||= ::ParamsProcessor::DocConverter.new OpenApi.docs
+          ::ParamsProcessor::DocConverter.new OpenApi.docs
         end
       end
       base.extend ClassMethods
@@ -44,7 +45,7 @@ module Generators::Rspec
 
         # FIXME token_needed
         content_stack.last << <<~DESCRIBE
-          api :#{action}, :#{http_verb}, '#{desc}'#{', :token_needed' if request_params['Token']} do
+          api :#{action}, :#{http_verb}, '#{desc}'#{', :token_needed' if request_params['Authorization']} do
             let(:#{let_param_name}) { #{params} }
             #{add_ind_to each[:describe]}
 

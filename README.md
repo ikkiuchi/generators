@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-group :development, :test do
+group :development do
   gem 'generators', github: 'ikkiuchi/generators'
 end
 ```

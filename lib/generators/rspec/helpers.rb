@@ -11,7 +11,7 @@ module Generators::Rspec
     def inherited(base)
       super
       base.class_eval do
-        self.path = name.sub('Spdoc', '').underscore.gsub('::', '/') unless path
+        self.path = name.sub('SpecDocs::', '').underscore.gsub('::', '/') unless path
         self.content_stack = [ '' ]
         self.each = { describe: '', conetxt: '' }
       end
@@ -34,7 +34,7 @@ module Generators::Rspec
     end
 
     def set_path(path)
-      self.path = "#{path}/#{name.sub('Spdoc', '').downcase}"
+      self.path = "#{path}/#{name.sub('SpecDocs::', '').downcase}"
     end
 
     def _instance_eval(block)
