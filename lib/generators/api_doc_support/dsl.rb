@@ -39,7 +39,7 @@ module Generators::ApiDocSupport
 
     def g version = nil
       ctrl_path = "app/controllers/#{@route_base}_controller#{version}.rb"
-      spdoc_path = "app/_docs/spec_docs/#{@route_base.sub('api/', '')}#{version}.rb"
+      spdoc_path = "app/_docs/others/spec_docs/api/#{@route_base.sub('api/', '')}#{version}.rb"
       biz_error_path = "app/_docs/error/#{api_name}#{version}.rb"
 
       write :Controller, controller_rb.sub("\n\nend", "\nend"), to: ctrl_path unless File::exist?(ctrl_path)
