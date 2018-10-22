@@ -55,6 +55,12 @@ module Generators::Jbuilder
             json.partial! 'api/success'
           FILE
           ),
+
+          default: (
+          <<~FILE
+            json.partial! 'api/base'
+          FILE
+          ),
       }
     end
   end

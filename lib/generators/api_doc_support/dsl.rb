@@ -71,12 +71,12 @@ module Generators::ApiDocSupport
       @api_actions.keys.map do |action|
         model = api_name.singularize.camelize
         impl = case action
-          when :index   then "@data = #{model}"
-          when :show    then "@datum = @#{model.underscore}"
-          when :create  then "#{model}.create! permitted"
-          when :update  then "@#{model.underscore}.update! permitted"
-          when :destroy then "@status = @#{model.underscore}.destroy"
-          else '# TODO'
+          when :index   then "build_with data: #{model}.all"
+          when :show    then "build_with datum: @#{model.underscore}"
+          when :create  then "check #{model}.create! permitted"
+          when :update  then "check @#{model.underscore}.update! permitted"
+          when :destroy then "check @#{model.underscore}.destroy"
+          else "# TODO\n  ok"
         end
 
         <<~ACTION
@@ -116,12 +116,14 @@ module Generators::ApiDocSupport
 
     def error_rb
       actions = @api_actions.keys.map do |action|
-        "\n  # group :#{action} do\n    # mattr_reader :ERROR_NAME\n  # end"
+        "\n  # group :#{action} do\n  #   mattr_reader :ERROR_NAME\n  # end\n"
       end.join
 
       <<~ERROR_RB
         class Error::#{api_name.camelize} < Error::Api
-          # include Concerns::Failed
+          # code_start_at 0
+
+          # include Error::Concerns::Failed
           #{actions}
         end
       ERROR_RB

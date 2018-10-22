@@ -18,6 +18,7 @@ module Generators::Jbuilder
     def generate(action_path, builder)
       return unless (config = Generators::Jbuilder::Config).enable
       return if builder.nil?
+      builder = :default if builder == true
 
       path, action = action_path.split('#')
       dir_path = "app/views/#{path}"

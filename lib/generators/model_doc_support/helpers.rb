@@ -184,13 +184,15 @@ module Generators::ModelDocSupport
       <<~MODEL
         class #{model_name} < ApplicationRecord
           #Create#{model_name.pluralize} ##{model_name.pluralize}Controller ##{model_name.pluralize}Doc
+
+          builder_support rmv: %i[  ], add: %i[  ]
           #{add_ind_to model_rb_stack.last}
         end
 
         __END__
 
-        #{migration_rb_stack.last}
-        #{indexes_to_migration}
+        #{add_ind_to migration_rb_stack.last, 2}
+        #{add_ind_to indexes_to_migration, 2}
       MODEL
     end
 
