@@ -4,10 +4,7 @@ module Generators::Rspec
       base.class_eval do
         require 'params_processor/doc_converter'
 
-        cattr_reader :apis do
-          # ::ParamsProcessor::DocConverter.docs ||= ::ParamsProcessor::DocConverter.new OpenApi.docs
-          ::ParamsProcessor::DocConverter.new OpenApi.docs
-        end
+        cattr_accessor :apis
       end
       base.extend ClassMethods
     end
@@ -97,6 +94,7 @@ module Generators::Rspec
       def inherited(base)
         super
         base.class_eval do
+          self.apis ||= ::ParamsProcessor::DocConverter.new OpenApi.docs
           self.doc = apis[OpenApi.routes_index[ctrl_path]]['paths']
         end
       end
