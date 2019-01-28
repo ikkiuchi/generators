@@ -22,13 +22,13 @@ module Generators::ModelDocSupport
     end
 
     TYPE_TO_DEFAULT_VAL = {
-        string: "'string'",
-        boolean: true,
-        integer: 1,
-        decimal: 1.0,
-        float: 1.0,
-        text: "'text'",
-        binary: 1,
+        string: "{ 'string' }",
+        boolean: '{ true }',
+        integer: '{ 1 }',
+        decimal: '{ 1.0 }',
+        float: '{ 1.0 }',
+        text: "{ 'text' }",
+        binary: '{ 1 }',
         date: '{ Date.today }',
         datetime: '{ DateTime.now }',
         time: '{ Time.current }',
@@ -172,6 +172,7 @@ module Generators::ModelDocSupport
           value = info[:default]
           value = pr(info[:inclusion]&.first) if value.nil?
           value = TYPE_TO_DEFAULT_VAL[type] if value.nil?
+          value = "{ #{value} }" unless value.to_s['{']
 
           fbot_rb_stack.last << <<~BOT
             #{'# ' if allow_nil}#{name.to_s.ljust(name_max_length)} #{value}
