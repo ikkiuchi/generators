@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'generators/version'
 
 files = %w[
@@ -9,7 +11,7 @@ files = %w[
   rspec/model/helpers rspec/model
   rspec/normal/helpers rspec/normal
   rspec/request/helpers rspec/request
-].map { |path| path.prepend('generators/') }
+].map! { |path| 'generators/' + path }
 
 files.each { |file| require file }
 

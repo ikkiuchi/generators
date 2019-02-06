@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Generators::Rspec
   module Normal
     module Helpers
@@ -33,6 +35,8 @@ module Generators::Rspec
 
       def whole_file
         <<~OUTER
+          # frozen_string_literal: true
+
           RSpec.describe #{path.split('/').last.camelize} do
             #{add_ind_to content_stack.last}
           end

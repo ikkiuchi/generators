@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Generators::ModelDocSupport
   module Helpers
     include Generators::Helpers
@@ -183,6 +185,8 @@ module Generators::ModelDocSupport
 
     def model_rb
       <<~MODEL
+        # frozen_string_literal: true
+
         class #{model_name} < ApplicationRecord
           #Create#{model_name.pluralize} ##{model_name.pluralize}Controller ##{model_name.pluralize}Doc
 
@@ -213,6 +217,8 @@ module Generators::ModelDocSupport
 
     def fbot_rb
       <<~BOT
+        # frozen_string_literal: true
+
         # http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
         FactoryBot.define do
           factory :#{model_name.underscore} do
@@ -225,6 +231,8 @@ module Generators::ModelDocSupport
     def doc_rb
       name = model_name.underscore
       <<~DOC
+        # frozen_string_literal: true
+
         # TODO: open this commit below when you using it
         class Api::#{doc_version.upcase}::#{model_name.pluralize}Doc# < ApiDoc
           components { schema #{model_name} }

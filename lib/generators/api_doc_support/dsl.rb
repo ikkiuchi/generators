@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Generators::ApiDocSupport
   module DSL
     def self.included(base)
@@ -8,9 +10,9 @@ module Generators::ApiDocSupport
   module ClassMethods
     include Generators::Helpers
 
-    def api action, summary = '', http: nil, builder: nil, skip: [ ], use: [ ], **args, &block
-      api = super(action, summary, http: http, builder: builder, skip: skip, use: use, **args, &block)
-      (@api_actions ||= { })[action] = { api: api, skip: skip, use: use, **(@path || { }) }
+    def api action, summary = '', http: nil, builder: nil, **args, &block
+      api = super(action, summary, http: http, builder: builder, **args, &block)
+      (@api_actions ||= { })[action] = { api: api, **(@path || { }) }
       @path = nil
     end
 
@@ -50,6 +52,8 @@ module Generators::ApiDocSupport
 
     def controller_rb
       <<~CTRL
+        # frozen_string_literal: true
+
         class #{@route_base.camelize}Controller < Api::#{api_version.upcase}::BaseController
           ##{api_name.singularize.camelize} ##{api_name.camelize}Doc #Error::#{api_name.camelize}
           include ActiveRecordErrorsRescuer
@@ -99,6 +103,8 @@ module Generators::ApiDocSupport
 
     def spdoc_rb
       <<~SPD
+        # frozen_string_literal: true
+
         class SpecDocs::#{@route_base.camelize} < RequestSpecDoc
           #{add_ind_to describes}
         end
@@ -120,6 +126,8 @@ module Generators::ApiDocSupport
       end.join
 
       <<~ERROR_RB
+        # frozen_string_literal: true
+
         class Error::#{api_name.camelize} < Error::Api
           # code_start_at 0
 

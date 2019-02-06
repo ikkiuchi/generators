@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Generators::Rspec
   module Request
     module Helpers
@@ -57,6 +59,8 @@ module Generators::Rspec
 
       def whole_file
         <<~OUTER
+          # frozen_string_literal: true
+
           require 'rails_helper'
           require 'dssl/request'
           

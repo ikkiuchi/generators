@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Generators::ApiDocSupport
   module Config
     cattr_accessor :enable do

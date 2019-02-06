@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Generators::Rspec
   module Model
     def self.included(base)
