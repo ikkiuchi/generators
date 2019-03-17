@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Generators::ModelDocSupport
   module DSL
     def self.included(base)
