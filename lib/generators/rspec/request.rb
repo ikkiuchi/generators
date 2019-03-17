@@ -22,7 +22,7 @@ module Generators::Rspec
       def describe action = nil, add_desc = nil, desc: nil, template: nil, &block
         _biz add_desc, template: template, &block if action.nil?
 
-        path, http_verb = ::OpenApi::Generator.find_path_httpverb_by(ctrl_path, action)
+        path, http_verb = ::OpenApi::Router.find_path_httpverb_by(ctrl_path, action)
         action_doc = doc[path][http_verb]
         self.describe_doc = ActiveSupport::OrderedOptions.new.merge(
             action: action, path: path, verb: http_verb, doc: action_doc
