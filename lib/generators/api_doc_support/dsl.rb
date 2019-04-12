@@ -32,16 +32,16 @@ module Generators::ApiDocSupport
     end
 
     def api_version
-      @route_base.split('/')[1]
+      oas[:route_base].split('/')[1]
     end
 
     def api_name
-      @route_base.split('/').last
+      oas[:route_base].split('/').last
     end
 
     def g version = nil
-      ctrl_path = "app/controllers/#{@route_base}_controller#{version}.rb"
-      spdoc_path = "app/_docs/others/spec_docs/api/#{@route_base.sub('api/', '')}#{version}.rb"
+      ctrl_path = "app/controllers/#{oas[:route_base]}_controller#{version}.rb"
+      spdoc_path = "app/_docs/others/spec_docs/api/#{oas[:route_base].sub('api/', '')}#{version}.rb"
       biz_error_path = "app/_docs/error/#{api_name}#{version}.rb"
 
       write :Controller, controller_rb.sub("\n\nend", "\nend"), to: ctrl_path unless File::exist?(ctrl_path)
@@ -54,7 +54,7 @@ module Generators::ApiDocSupport
       <<~CTRL
         # frozen_string_literal: true
 
-        class #{@route_base.camelize}Controller < Api::#{api_version.upcase}::BaseController
+        class #{oas[:route_base].camelize}Controller < Api::#{api_version.upcase}::BaseController
           ##{api_name.singularize.camelize} ##{api_name.camelize}Doc #Error::#{api_name.camelize}
           include ActiveRecordErrorsRescuer
           ERROR = Error::#{api_name.camelize}
@@ -105,7 +105,7 @@ module Generators::ApiDocSupport
       <<~SPD
         # frozen_string_literal: true
 
-        class SpecDocs::#{@route_base.camelize} < RequestSpecDoc
+        class SpecDocs::#{oas[:route_base].camelize} < RequestSpecDoc
           #{add_ind_to describes}
         end
       SPD
